@@ -14,7 +14,7 @@ conversation about its contents using RAG via function calling.
                         │         Document Ingestion       │
                         │                                  │
   PDF / URL / Text ───► │  Extract → Chunk → Embed → Store │
-                        │                   (OpenAI)  (Chroma)│
+                        │                  (Voyage)   (Chroma)│
                         └──────────────┬──────────────────┘
                                        │ vector store ready
                                        ▼
@@ -42,18 +42,18 @@ conversation about its contents using RAG via function calling.
 
 ## Tech Stack
 
-| Component        | Choice                  | Why                                    |
-|------------------|-------------------------|----------------------------------------|
-| Framework        | Pipecat (`pipecat-ai`)  | Purpose-built for voice agents         |
-| STT              | Deepgram                | Fast, accurate, streaming              |
-| LLM              | OpenAI `gpt-4o`         | Best function-calling support          |
-| TTS              | Cartesia                | Ultra-low latency voice synthesis      |
-| Embeddings       | OpenAI `text-embedding-3-small` | Cheap, good quality           |
-| Vector Store     | ChromaDB (local)        | Zero-config, no external service       |
-| Doc Parsing      | PyPDF2 + BeautifulSoup  | PDF + URL extraction                   |
-| Text Splitting   | LangChain splitters     | Robust recursive chunking              |
-| Transport        | Daily WebRTC            | Production-quality audio, free tier    |
-| VAD              | Silero                  | Accurate voice activity detection      |
+| Component        | Choice                          | Why                                    |
+|------------------|---------------------------------|----------------------------------------|
+| Framework        | Pipecat (`pipecat-ai`)          | Purpose-built for voice agents         |
+| STT              | Deepgram                        | Fast, accurate, streaming              |
+| LLM              | Anthropic `claude-sonnet-4-5-20250929` | Smart, great tool use, your preferred provider |
+| TTS              | Cartesia                        | Ultra-low latency voice synthesis      |
+| Embeddings       | Voyage AI `voyage-3-lite`       | Anthropic's recommended embedding partner, free tier |
+| Vector Store     | ChromaDB (local)                | Zero-config, no external service       |
+| Doc Parsing      | PyPDF2 + BeautifulSoup          | PDF + URL extraction                   |
+| Text Splitting   | LangChain splitters             | Robust recursive chunking              |
+| Transport        | Daily WebRTC                    | Production-quality audio, free tier    |
+| VAD              | Silero                          | Accurate voice activity detection      |
 
 ---
 
@@ -85,7 +85,7 @@ hello-world/
 - `ingest_url(url)` — fetch URL, extract text with BeautifulSoup
 - `ingest_text(text)` — accept raw text
 - Chunk text using `RecursiveCharacterTextSplitter` (1000 chars, 200 overlap)
-- Embed chunks with OpenAI embeddings
+- Embed chunks with Voyage AI embeddings (`voyage-3-lite`)
 - Store in ChromaDB persistent collection
 - Return the collection for querying
 
@@ -105,7 +105,7 @@ hello-world/
 ### Step 4: Voice Pipeline (`bot.py`)
 - Configure services:
   - Deepgram STT (streaming)
-  - OpenAI LLM with system prompt:
+  - Anthropic Claude (Sonnet) with system prompt:
     > "You are a voice assistant that helps users understand and discuss a document.
     > Use the search_document function to find relevant information before answering.
     > Keep responses concise and conversational (2-3 sentences).
@@ -127,7 +127,7 @@ hello-world/
 - Print the room URL for the user to join
 
 ### Step 6: README with setup instructions
-- API key setup (Deepgram, OpenAI, Cartesia, Daily)
+- API key setup (Anthropic, Voyage AI, Deepgram, Cartesia, Daily)
 - Install dependencies
 - Run examples:
   ```bash
@@ -139,12 +139,13 @@ hello-world/
 
 ## API Keys Required
 
-| Service   | Free Tier                | Sign Up                              |
-|-----------|--------------------------|--------------------------------------|
-| Deepgram  | $200 free credit         | https://console.deepgram.com         |
-| OpenAI    | Pay-as-you-go            | https://platform.openai.com          |
-| Cartesia  | Free tier available      | https://play.cartesia.ai             |
-| Daily     | 10,000 min/month free    | https://dashboard.daily.co           |
+| Service    | Free Tier                | Sign Up                              |
+|------------|--------------------------|--------------------------------------|
+| Anthropic  | Pay-as-you-go            | https://console.anthropic.com        |
+| Voyage AI  | 50M free tokens/month    | https://dash.voyageai.com            |
+| Deepgram   | $200 free credit         | https://console.deepgram.com         |
+| Cartesia   | Free tier available      | https://play.cartesia.ai             |
+| Daily      | 10,000 min/month free    | https://dashboard.daily.co           |
 
 ---
 
