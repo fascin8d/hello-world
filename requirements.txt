@@ -1,0 +1,8 @@
+pipecat-ai[anthropic,deepgram,cartesia,daily,silero]
+chromadb
+voyageai
+pypdf2
+beautifulsoup4
+requests
+langchain-text-splitters
+python-dotenv
