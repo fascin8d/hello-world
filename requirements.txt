@@ -5,4 +5,3 @@ pypdf2
 beautifulsoup4
 requests
 langchain-text-splitters
-python-dotenv

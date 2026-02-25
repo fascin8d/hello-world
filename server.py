@@ -5,14 +5,11 @@ import asyncio
 import os
 
 import aiohttp
-from dotenv import load_dotenv
 from pipecat.pipeline.runner import PipelineRunner
 from pipecat.transports.services.helpers.daily_rest import DailyRESTHelper, DailyRoomParams
 
 from bot import create_pipeline
 from ingest import ingest
-
-load_dotenv()
 
 
 async def main():
