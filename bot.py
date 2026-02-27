@@ -7,11 +7,11 @@ from chromadb import Collection
 from pipecat.audio.vad.silero import SileroVADAnalyzer
 from pipecat.pipeline.pipeline import Pipeline
 from pipecat.pipeline.task import PipelineTask
-from pipecat.processors.aggregators.llm_context import LLMContext, LLMContextAggregatorPair
-from pipecat.services.anthropic import AnthropicLLMService
-from pipecat.services.cartesia import CartesiaTTSService
-from pipecat.services.deepgram import DeepgramSTTService
-from pipecat.transports.services.daily import DailyParams, DailyTransport
+from pipecat.processors.aggregators.openai_llm_context import OpenAILLMContext
+from pipecat.services.anthropic.llm import AnthropicLLMService
+from pipecat.services.cartesia.tts import CartesiaTTSService
+from pipecat.services.deepgram.stt import DeepgramSTTService
+from pipecat.transports.daily.transport import DailyTransport, DailyParams
 
 from rag import create_search_handler, tools
 
@@ -64,18 +64,18 @@ def create_pipeline(
 
     # Conversation context with tools
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
-    context = LLMContext(messages, tools=tools)
-    user_aggregator, assistant_aggregator = LLMContextAggregatorPair(context)
+    context = OpenAILLMContext(messages, tools=tools)
+    context_aggregator = llm.create_context_aggregator(context)
 
     pipeline = Pipeline(
         [
             transport.input(),
             stt,
-            user_aggregator,
+            context_aggregator.user(),
             llm,
             tts,
             transport.output(),
-            assistant_aggregator,
+            context_aggregator.assistant(),
         ]
     )
 

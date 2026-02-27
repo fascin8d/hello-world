@@ -26,11 +26,11 @@ Talk to any document or URL using a real-time voice agent powered by Pipecat + C
 Edit `.env` with your 1Password secret reference paths:
 
 ```
-ANTHROPIC_API_KEY=op://Private/anthropic/credential
-VOYAGEAI_API_KEY=op://Private/voyageai/credential
-DEEPGRAM_API_KEY=op://Private/deepgram/credential
-CARTESIA_API_KEY=op://Private/cartesia/credential
-DAILY_API_KEY=op://Private/daily/credential
+ANTHROPIC_API_KEY=op://api-keys/anthropic-voice-agent-kev/credential
+VOYAGEAI_API_KEY=op://api-keys/voyageai-voice-agent-kev/credential
+DEEPGRAM_API_KEY=op://api-keys/deepgram-voice-agent-kev/credential
+CARTESIA_API_KEY=op://api-keys/cartesia-voice-agent-kev/credential
+DAILY_API_KEY=op://api-keys/daily-voice-agent-kev/credential
 ```
 
 ### 3. Install Dependencies

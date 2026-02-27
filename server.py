@@ -6,7 +6,7 @@ import os
 
 import aiohttp
 from pipecat.pipeline.runner import PipelineRunner
-from pipecat.transports.services.helpers.daily_rest import DailyRESTHelper, DailyRoomParams
+from pipecat.transports.daily.utils import DailyRESTHelper, DailyRoomParams
 
 from bot import create_pipeline
 from ingest import ingest
